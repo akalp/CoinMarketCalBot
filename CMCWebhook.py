@@ -10,7 +10,7 @@ logging.basicConfig(filename='CMCWebhook.log', level=logging.DEBUG, format='%(as
 
 CMC_ID = "712_zx0dpmsv6pcockk44gwckccwwkk4sws0wwkwgswgo48w4k480"
 CMC_SECRET = "5ali6ds8vh8gk804c04o8wgkgkscw0c8w0gk84kogw40csc4gw"
-WEBHOOK_URL = "https://discordapp.com/api/webhooks/450070522873774082/HeDjfKR9bOE9bocK8IaPwQ5SrIkePJXyNt10yhJdMREZyx8npWU63OBmUr1QDrCqvl8-"
+WEBHOOK_URL = "https://discordapp.com/api/webhooks/451005939789594625/mMMA1nwKi3gzVgIl-VrNFSBzkrfAyVyexhD4VEPBkLMPV3MWz9gxTQLbsmSoLiJiPsKr"
 
 tokenJSON = {}
 
@@ -121,7 +121,7 @@ def sendEventsDateByDate(days=2):
 def sendShortEventsDateByDate(days=7):
     events = getEventsDateByDate(days)
     dates = list(events.keys())
-    post = wh.Webhook(WEBHOOK_URL, title="Events of -> {} - {}".format(dates[0], dates[-1]),
+    post = wh.Webhook(WEBHOOK_URL, title="Events of {} - {}".format(dates[0], dates[-1]),
                       footer_icon="https://pbs.twimg.com/profile_images/984423152116781056/Z9MUJT_7_400x400.jpg",
                       footer="https://coinmarketcal.com/")
     for date in dates:
