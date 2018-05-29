@@ -4,6 +4,9 @@ import time
 from datetime import datetime, timedelta
 import requests as r
 import json
+import logging
+
+logging.basicConfig(filename='CMCWebhook.log', level=logging.DEBUG, format='%(asctime)s %(message)s', datefmt='%Y/%m/%d %I:%M:%S %p')
 
 CMC_ID = "712_zx0dpmsv6pcockk44gwckccwwkk4sws0wwkwgswgo48w4k480"
 CMC_SECRET = "5ali6ds8vh8gk804c04o8wgkgkscw0c8w0gk84kogw40csc4gw"
@@ -20,9 +23,11 @@ def getToken():
     try:
         events = r.post(url, data=payload)
         tokenJSON = json.loads(events.text)
-    except json.decoder.JSONDecodeError:
-        print("JSONDecodeError")
+    except json.decoder.JSONDecodeError as ex:
+        logging.error("Token is not received")
+        logging.error("Error: %s" % getattr(ex, 'message', repr(ex)))
         tokenJSON = []
+    logging.info("New token is received")
 
 
 def getEvents(token, page=None, max=None, dateRangeStart=None, dateRangeEnd=None,
@@ -43,8 +48,9 @@ def getEvents(token, page=None, max=None, dateRangeStart=None, dateRangeEnd=None
     try:
         events = r.get(url, params=payload)
         result = json.loads(events.text)
-    except json.decoder.JSONDecodeError:
-        print("JSONDecodeError")
+    except json.decoder.JSONDecodeError as ex:
+        logging.error("Events are not received")
+        logging.error("Error: %s" % getattr(ex, 'message', repr(ex)))
         result = []
     return result
 
@@ -106,7 +112,10 @@ def sendEventsDateByDate(days=2):
                                   footer_icon="https://pbs.twimg.com/profile_images/984423152116781056/Z9MUJT_7_400x400.jpg",
                                   footer="https://coinmarketcal.com/")
 
-        post.post()
+        if post.post():
+            logging.info("2-days events are posted")
+        else:
+            logging.error("2-days events are not posted")
 
 
 def sendShortEventsDateByDate(days=7):
@@ -126,14 +135,16 @@ def sendShortEventsDateByDate(days=7):
             output += "{}. *{}* **{}**\n".format(count, event["title"], coins)
             count += 1
             if len(output) > 950:
-                post.add_field(name="Date: {}".format(date), value=output, inline=False)
+                post.add_field(name="Date: {}".format(date) if not b else "...", value=output, inline=False)
                 output = ""
                 b = True
 
-        print(len(output))
         post.add_field(name="Date: {}".format(date) if not b else "...", value=output, inline=False)
 
-    post.post()
+    if post.post():
+        logging.info("Weekly events are posted")
+    else:
+        logging.error("Weekly events are not posted")
 
 
 getToken()

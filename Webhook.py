@@ -3,7 +3,9 @@ import requests
 import time
 import datetime
 from collections import defaultdict
+import logging
 
+logging.basicConfig(filename='CMCWebhook.log', level=logging.DEBUG, format='%(asctime)s %(message)s', datefmt='%Y/%m/%d %I:%M:%S %p')
 
 class Webhook:
     def __init__(self, url, **kwargs):
@@ -112,7 +114,7 @@ class Webhook:
         empty = all(not d for d in data["embeds"])
 
         if empty and 'content' not in data:
-            print('You cant post an empty payload.')
+            logging.error('Error: Empty payload')
         if empty: data['embeds'] = []
 
         return json.dumps(data, indent=4)
@@ -127,10 +129,12 @@ class Webhook:
         result = requests.post(self.url, data=self.json, headers=headers)
 
         if result.status_code == 400:
-            print("Post Failed, Error 400")
+            logging.error("Post Failed, Error 400")
+            return False
         else:
-            print("Payload delivered successfuly")
-            print("Code : " + str(result.status_code))
+            logging.info("Payload delivered successfuly")
+            logging.info("Code : " + str(result.status_code))
             time.sleep(2)
+            return True
 
 
