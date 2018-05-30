@@ -148,11 +148,10 @@ def sendShortEventsDateByDate(days=7):
 
 
 getToken()
-sendEventsDateByDate()
 
 sc.every(30).days.do(getToken)  # Her 30 günde bir yeni token alacak
-sc.every().day.do(sendEventsDateByDate)  # Her gün (iki günlük) etkinlikleri postlayacak
-sc.every().monday.do(sendShortEventsDateByDate)  # Her pazartesi (haftalık) etkinlikleri postlayacak
+sc.every().day.at("00:30").do(sendEventsDateByDate)  # Her gün (iki günlük) etkinlikleri postlayacak
+sc.every().monday.at("00:10").do(sendShortEventsDateByDate)  # Her pazartesi (haftalık) etkinlikleri postlayacak
 
 while True:
     sc.run_pending()
