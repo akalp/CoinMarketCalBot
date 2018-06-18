@@ -1,6 +1,5 @@
 import Webhook as wh
 import schedule as sc
-import time
 from datetime import datetime, timedelta
 import requests as r
 import json
@@ -11,7 +10,7 @@ logging.basicConfig(filename='CMCWebhook.log', level=logging.DEBUG, format='%(as
 CMC_ID = "712_zx0dpmsv6pcockk44gwckccwwkk4sws0wwkwgswgo48w4k480"
 CMC_SECRET = "5ali6ds8vh8gk804c04o8wgkgkscw0c8w0gk84kogw40csc4gw"
 WEBHOOK_URL = "https://discordapp.com/api/webhooks/451005939789594625/mMMA1nwKi3gzVgIl-VrNFSBzkrfAyVyexhD4VEPBkLMPV3MWz9gxTQLbsmSoLiJiPsKr"
-
+#botdeneme sunucusunun #WEBHOOK_URL = "https://discordapp.com/api/webhooks/458355190651682837/4wOD9NMj4lZKNA38cnMZs0HCMGNuux9wvCgb7yAxkc4xScFUI_Ui-ksy_1w6O1gj2IhA"
 tokenJSON = {}
 
 
@@ -87,7 +86,7 @@ def getEventsDateByDate(days=2):
 
 def sendEventsDateByDate(days=2):
     events = getEventsDateByDate(days)
-    for date in events:
+    for date in sorted(events.keys()):
         post = wh.Webhook(WEBHOOK_URL, title="Date: {}".format(date),
                           footer_icon="https://pbs.twimg.com/profile_images/984423152116781056/Z9MUJT_7_400x400.jpg",
                           footer="https://coinmarketcal.com/")
@@ -120,7 +119,7 @@ def sendEventsDateByDate(days=2):
 
 def sendShortEventsDateByDate(days=7):
     events = getEventsDateByDate(days)
-    dates = list(events.keys())
+    dates = sorted(list(events.keys()))
     post = wh.Webhook(WEBHOOK_URL, title="Events of {} - {}".format(dates[0], dates[-1]),
                       footer_icon="https://pbs.twimg.com/profile_images/984423152116781056/Z9MUJT_7_400x400.jpg",
                       footer="https://coinmarketcal.com/")
