@@ -1,8 +1,5 @@
 # CoinMarketCalBot
-requirements
 
-requests
-
-schedule (https://github.com/dbader/schedule)
-
-Change WEBHOOK_URL
+## requirements
+1. requests
+2. schedule (https://github.com/dbader/schedule)
