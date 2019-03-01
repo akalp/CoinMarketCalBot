@@ -7,10 +7,9 @@ import logging
 
 logging.basicConfig(filename='CMCWebhook.log', level=logging.DEBUG, format='%(asctime)s %(message)s', datefmt='%Y/%m/%d %I:%M:%S %p')
 
-CMC_ID = "712_zx0dpmsv6pcockk44gwckccwwkk4sws0wwkwgswgo48w4k480"
-CMC_SECRET = "5ali6ds8vh8gk804c04o8wgkgkscw0c8w0gk84kogw40csc4gw"
-WEBHOOK_URL = "https://discordapp.com/api/webhooks/451005939789594625/mMMA1nwKi3gzVgIl-VrNFSBzkrfAyVyexhD4VEPBkLMPV3MWz9gxTQLbsmSoLiJiPsKr"
-#botdeneme sunucusunun #WEBHOOK_URL = "https://discordapp.com/api/webhooks/458355190651682837/4wOD9NMj4lZKNA38cnMZs0HCMGNuux9wvCgb7yAxkc4xScFUI_Ui-ksy_1w6O1gj2IhA"
+CMC_ID = "YOUR_COINMARKETCAL_ID"
+CMC_SECRET = "YOUR_COINMARKETCAL_SECRET"
+WEBHOOK_URL = "YOUR_DISCORD_WEBHOOK_URL"
 tokenJSON = {}
 
 
